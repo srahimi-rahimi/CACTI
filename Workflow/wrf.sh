@@ -1,10 +1,11 @@
 #!/bin/bash
-#PBS -N test14
-#PBS -A WYOM0200
+#PBS -N A
+#PBS -A WYOM0247
 #PBS -q main
 #PBS -l walltime=12:00:00
-#PBS -l select=36:ncpus=128:mpiprocs=128
-#PBS -o log.oe
+#PBS -l job_priority=premium
+#PBS -l select=3:ncpus=128:mpiprocs=128
+#PBS -o log.oe.$PBS_JOBID
 
 export WRF_CHEM=0
 export EM_CORE=1
@@ -24,4 +25,23 @@ module load craype/2.7.20
 module load netcdf/4.9.2
 module load ncarcompilers/1.0.0
 
-mpiexec ./wrf.exe 
+ml conda
+conda activate dynamics
+rm wrf*d01
+python update_namelist.py ./namelist.input
+python set_restart_interval.py ./
+python link.py ./
+conda deactivate
+module unload conda
+
+if mpiexec ./wrf.exe; then
+  echo "wrf.exe a success, auto-restarting...."
+  qsub wrf.sh #auto-restart
+
+else
+  echo "wrf.exe failed (exit code $?); Exitting"
+  exit 1
+fi
+
+
+exit 0
