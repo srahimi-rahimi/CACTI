@@ -1,0 +1,52 @@
+# Object/module/library files
+*.o
+*.mod
+*.a
+*.so
+*.dylib
+*.dll
+
+# Executables
+*.exe
+wrf.exe
+real.exe
+ndown.exe
+tc.exe
+ideal.exe
+geogrid.exe
+ungrib.exe
+metgrid.exe
+
+# WRF/WPS build logs
+compile.log
+*.log
+*.out
+*.err
+
+# WRF/WPS generated files and run products
+wrfout_*
+wrfrst_*
+wrfbdy_*
+wrfinput_*
+met_em*
+geo_em*
+FILE:*
+GRIBFILE.*
+PFILE:*
+
+# Large model/input/output data
+*.nc
+*.grb
+*.grib
+*.grib2
+*.hdf
+*.h5
+
+# Temporary/editor/system files
+*.tmp
+*.swp
+*~
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
